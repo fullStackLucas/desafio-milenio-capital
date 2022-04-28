@@ -1,0 +1,41 @@
+{
+  "name": "desafio-dev-jr-pl",
+  "version": "1.0.0",
+  "description": "Bem vindo(a)! Esse desafio tem como objetivo avaliar a capacidade do candidato de construir uma API seguindo as melhores práticas e padrões de desenvolvimento.",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.0"
+  },
+  "scripts": {
+    "drop": "npx sequelize-cli db:drop $",
+    "seed": "npx sequelize-cli db:seed:all $",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "unseed": "npx sequelize-cli db:seed:undo",
+    "test": "nyc --all --include controllers mocha tests/unit/**/*.js --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/lucaspinheirorocha/desafio-dev-jr-pl.git"
+  },
+  "keywords": [],
+  "author": "Lucas Pinheiro Rocha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/lucaspinheirorocha/desafio-dev-jr-pl/issues"
+  },
+  "homepage": "https://gitlab.com/lucaspinheirorocha/desafio-dev-jr-pl#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
+    "sequelize-cli": "^6.4.1",
+    "sinon": "^13.0.2"
+  }
+}
