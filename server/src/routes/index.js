@@ -1,8 +1,7 @@
 const express = require('express');
+const helloWorld = require('./helloWorld');
 
 const routes = express.Router();
-routes.get('/', (_req, res) => {
-  return res.status(200).json({ message: 'Hello, Milenio!'});
-});
+routes.get('/', helloWorld);
 
 module.exports = routes;
