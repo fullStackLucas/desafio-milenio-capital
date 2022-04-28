@@ -2,19 +2,19 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const GraphsTable = queryInterface.createTable('Graphs', {
+    const GraphsTable = queryInterface.createTable('graphs', {
       id: {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       }
     })
     
     return GraphsTable;
   },
 
-  async down (queryInterface, Sequelize) {
-    queryInterface.dropTable('Graphs');
+  async down (queryInterface, _Sequelize) {
+    await queryInterface.dropTable('graphs');
   }
 };
