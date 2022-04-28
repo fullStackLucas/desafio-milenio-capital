@@ -10,6 +10,8 @@ module.exports = {
           model: 'graph',
           key: 'id',
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       source: {
         allowNull: false,
