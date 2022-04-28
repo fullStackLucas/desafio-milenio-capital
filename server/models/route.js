@@ -35,4 +35,4 @@ Route.init(
 
 Route.belongsTo(Graph);
 
-module.exports = Graph;
+module.exports = Route;
