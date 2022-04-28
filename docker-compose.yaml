@@ -17,6 +17,13 @@ services:
     restart: always
     image: milenio-backend
     build: ./server
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: root
+      HOSTNAME: localhost
+      PORT: 8080
+
     ports:
       - 8080:8080
     networks:
