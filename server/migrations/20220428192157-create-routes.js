@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'graph',
+          model: 'graphs',
           key: 'id',
         },
         onUpdate: "CASCADE",
