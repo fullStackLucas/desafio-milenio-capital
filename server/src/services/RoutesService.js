@@ -1,7 +1,7 @@
 const Route = require('../models/Route');
 
-const getAllById = (id) => {
-  const graphRoutes = Route.findAll({
+const getAllById = async (id) => {
+  const graphRoutes = await Route.findAll({
     where: {id}
   })
 
