@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
     Attributes,
     {
       underscored: true,
-      sequelize: db,
       modelName: 'graph',
       timestamps: false,
     },
