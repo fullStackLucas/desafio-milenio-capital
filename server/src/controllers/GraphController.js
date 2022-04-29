@@ -1,8 +1,9 @@
 const GraphService = require('../services/GraphsService');
 
-const create = async (_req, res) => {
+const create = async (req, res) => {
   try {
-    const createdGraph = await GraphService.create();
+    const { data } = req.body;
+    const createdGraph = await GraphService.create(data);
     return res.status(201).json(createdGraph);
   } catch (error) {
     console.log(error.message);
