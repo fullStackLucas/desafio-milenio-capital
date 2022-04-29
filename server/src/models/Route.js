@@ -20,22 +20,20 @@ const Attributes = {
   },
 };
 
-module.exports = () => {
-  const Route = db.define(
-    'route', 
-    Attributes,
-    {
-      underscored: true,
-      modelName: 'route',
-      timestamps: false,
-    },
-  );
+const Route = db.define(
+  'route', 
+  Attributes,
+  {
+    underscored: true,
+    modelName: 'route',
+    timestamps: false,
+  },
+);
 
-  Route.associate = (models) => {
-    Route.belongsTo(models.Graph, {
-      foreignKey: 'graphId', as: 'graphId',
-    });
-  };
-
-  return Route;
+Route.associate = (models) => {
+  Route.belongsTo(models.Graph, {
+    foreignKey: 'graphId', as: 'graphId',
+  });
 };
+
+module.exports = Route;
