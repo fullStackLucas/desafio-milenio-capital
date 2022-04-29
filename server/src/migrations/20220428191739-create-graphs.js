@@ -8,6 +8,8 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       }
     })
     
