@@ -1,4 +1,7 @@
 const Route = require('../models/Route');
+const Graph = require('node-dijkstra')
+ 
+const shortestPath = new Graph()
 
 const getAllById = async (graphId) => {
   console.log(graphId)
