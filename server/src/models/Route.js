@@ -1,6 +1,4 @@
 const { DataTypes, Model } = require('sequelize');
-const Graph = require('./graph');
-const db = require('.');
 
 const Attributes = {
   graphId: {
@@ -21,18 +19,22 @@ const Attributes = {
   },
 };
 
-class Route extends Model {};
+module.exports = (sequelize) => {
+  const Route = sequelize.define(
+    'route', 
+    Attributes,
+    {
+      underscored: true,
+      modelName: 'route',
+      timestamps: false,
+    },
+  );
 
-Route.init(
-  Attributes,
-  {
-    underscored: true,
-    sequelize: db,
-    modelName: 'route',
-    timestamps: false,
-  },
-);
+  Route.associate = (models) => {
+    Route.belongsTo(models.Graph, {
+      foreignKey: 'graphId', as: 'graphId',
+    });
+  };
 
-Route.belongsTo(Graph);
-
-module.exports = Route;
+  return Route;
+};

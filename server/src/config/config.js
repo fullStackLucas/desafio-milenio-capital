@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 module.exports = {
   development: {
     username: process.env.MYSQL_USER || 'root',
@@ -13,14 +11,16 @@ module.exports = {
     username: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASSWORD || 'password',
     database: 'milenio_capital',
-    host: process.env.HOSTNAME || 'db',
+    host: process.env.HOSTNAME || 'localhost',
     dialect: 'mysql',
+    port: 3308
   },
   production: {
     username: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASSWORD || 'password',
     database: 'milenio_capital',
-    host: process.env.HOSTNAME || 'db',
+    host: process.env.HOSTNAME || 'localhost',
     dialect: 'mysql',
+    port: 3308
   },
 };
