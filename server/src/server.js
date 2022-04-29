@@ -3,12 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const routes = require('./routes');
 
-const app = express();
+const server = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(express.json());
-app.use(cors());
-app.use(routes);
+server.use(express.json());
+server.use(cors());
+server.use(routes);
 
 
-app.listen(PORT, () => console.log(`Escutando a porta ${PORT}`))
+server.listen(PORT, () => console.log(`Escutando a porta ${PORT}`))
