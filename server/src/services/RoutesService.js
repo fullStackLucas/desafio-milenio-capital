@@ -25,6 +25,8 @@ const getShortestPath = async (graphId, town1, town2) => {
   const graphObject = helpers.nodesObject(graphRoutes);
   const path = new Graph(graphObject);
   const shortestPath = path.path(town1, town2, { cost: true });
+  const pathRenamed = helpers.changeNameOfKey(shortestPath, 'cost', 'distance')
+  return pathRenamed;
 }
 
 module.exports = {

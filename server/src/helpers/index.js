@@ -2,22 +2,26 @@ const nodesObject = (data) => {
   const newObjectNode = {};
 
   data.forEach(({source, target, distance}) => {
-    let insideObject = {}
-    insideObject[target] = distance;
     if(!newObjectNode[source]) {
-      newObjectNode[source] = insideObject;
-      insideObject = {}
+      newObjectNode[source] = { [target]: distance };
     } else {
       newObjectNode[source] = {
         ...newObjectNode[source],
-        ...insideObject,
+        [target]: distance,
       }
-      insideObject = {}
     }
   })
   return newObjectNode;
 }
 
+const changeNameOfKey = (obj, oldKeyName, newKeyName) => {
+  return {
+    [newKeyName]: obj[oldKeyName],
+    path: [...obj.path],
+  }
+}
+
 module.exports = {
   nodesObject,
+  changeNameOfKey,
 }
