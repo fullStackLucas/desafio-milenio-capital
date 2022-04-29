@@ -5,7 +5,7 @@ const GraphController = require('../controllers/GraphController');
 
 const routes = express.Router();
 routes.get('/', helloWorld);
-routes.post('/graph', GraphController.create);
 routes.get('/graph/:graphId', RouteController.getAllById);
+routes.post('/graph', GraphController.create);
 
 module.exports = routes;

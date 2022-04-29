@@ -1,11 +1,18 @@
 const Route = require('../models/Route');
 
-const getAllById = async (id) => {
+const getAllById = async (graphId) => {
+  console.log(graphId)
   const graphRoutes = await Route.findAll({
-    where: {id}
+    where: { id: graphId },
+    attributes: ['source', 'target', 'distance']
   })
 
-  return graphRoutes;
+  if(graphRoutes.length === 0) return null;
+
+  return {
+    id: graphId,
+    data: [...graphRoutes],
+  };
 }
 
 module.exports = {
