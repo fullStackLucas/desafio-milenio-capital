@@ -4,7 +4,7 @@ const Route = require('../models/Route');
 const create = async (data) => {
   const createdGraph = await Graph.create();
   const bulkRouteInsertions = data.map((route) => ({
-    graphId: createdGraph.id,
+    id: createdGraph.id,
     source: route.source,
     target: route.target,
     distance: route.distance,

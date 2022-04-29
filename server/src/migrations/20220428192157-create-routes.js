@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     const RoutesTable = queryInterface.createTable('routes', {
-      graphId: {
+      id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
