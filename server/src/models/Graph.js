@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const db = require('.');
 
 const Attributes = {
   id: {
@@ -9,22 +10,21 @@ const Attributes = {
   }
 };
 
-module.exports = (sequelize) => {
-  const Graph = sequelize.define(
-    'graph', 
-    Attributes,
-    {
-      underscored: true,
-      modelName: 'graph',
-      timestamps: false,
-    },
-  );
+const Graph = db.define(
+  'graph', 
+  Attributes,
+  {
+    underscored: true,
+    modelName: 'graph',
+    timestamps: false,
+  },
+);
 
-  Graph.associate = (models) => {
-    Graph.hasMany(models.Route, {
-      foreignKey: 'graphId', as: 'graphId',
-    });
-  };
-
-  return Graph;
+Graph.associate = (models) => {
+  Graph.hasMany(models.Route, {
+    foreignKey: 'graphId', as: 'graphId',
+  });
 };
+
+module.exports = Graph;
+

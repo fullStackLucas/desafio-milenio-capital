@@ -1,4 +1,5 @@
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const db = require('.');
 
 const Attributes = {
   graphId: {
@@ -19,8 +20,8 @@ const Attributes = {
   },
 };
 
-module.exports = (sequelize) => {
-  const Route = sequelize.define(
+module.exports = () => {
+  const Route = db.define(
     'route', 
     Attributes,
     {

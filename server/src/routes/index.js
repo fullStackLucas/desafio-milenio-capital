@@ -4,6 +4,6 @@ const GraphController = require('../controllers/GraphController')
 
 const routes = express.Router();
 routes.get('/', helloWorld);
-routes.get('/graph', GraphController.create)
+routes.post('/graph', GraphController.create)
 
 module.exports = routes;
