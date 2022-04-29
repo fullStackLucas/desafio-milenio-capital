@@ -10,7 +10,11 @@ const getAllById = async (req, res) => {
 
 const getShortestPath = async (req, res) => {
   const { graphId, town1, town2 } = req.params;
-  const shortestPath = await RouteService(graphId, town1, town2);
+  const shortestPath = await RouteService.getShortestPath(
+    graphId,
+    town1.toUpperCase(),
+    town2.toUpperCase()
+  );
 
   if(!shortestPath) return res.status(404).json({ error: 'NOT FOUND (404)' })
   return res.status(200).json(shortestPath);
