@@ -1,9 +1,10 @@
 const express = require('express');
 const helloWorld = require('./helloWorld');
-const GraphController = require('../controllers/GraphController')
+const RouteController = require('../controllers/RouteController')
 
 const routes = express.Router();
 routes.get('/', helloWorld);
+routes.get('/graph/:graphId', RouteController.getAllById)
 routes.post('/graph', GraphController.create)
 
 module.exports = routes;
