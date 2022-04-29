@@ -17,3 +17,7 @@ const nodesObject = (data) => {
   })
   return newObjectNode;
 }
+
+module.exports = {
+  nodesObject,
+}

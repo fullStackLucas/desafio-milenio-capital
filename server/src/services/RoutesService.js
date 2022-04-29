@@ -1,7 +1,6 @@
 const Route = require('../models/Route');
 const Graph = require('node-dijkstra')
- 
-const shortestPath = new Graph()
+const helpers = require('../helpers');
 
 const getAllById = async (graphId) => {
   console.log(graphId)
@@ -23,9 +22,12 @@ const getShortestPath = async (graphId, town1, town2) => {
     where: { id: graphId },
     attributes: ['source', 'target', 'distance']
   });
-  
+  const graphObject = helpers.nodesObject(graphRoutes);
+  const path = new Graph(graphObject);
+  const shortestPath = path.path(town1, town2, { cost: true });
 }
 
 module.exports = {
   getAllById,
+  getShortestPath,
 }
