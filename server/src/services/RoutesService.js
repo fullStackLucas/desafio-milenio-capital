@@ -18,6 +18,14 @@ const getAllById = async (graphId) => {
   };
 }
 
+const getShortestPath = async (graphId, town1, town2) => {
+  const graphRoutes = await Route.findAll({
+    where: { id: graphId },
+    attributes: ['source', 'target', 'distance']
+  });
+  
+}
+
 module.exports = {
   getAllById,
 }
