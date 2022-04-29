@@ -2,7 +2,6 @@ const GraphService = require('../services/GraphsService');
 
 const create = async (req, res) => {
   try {
-    console.log('este é o console: ', req.body);
     const { data } = req.body;
     const createdGraph = await GraphService.create(data);
     return res.status(201).json(createdGraph);
