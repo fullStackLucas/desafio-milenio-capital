@@ -9,7 +9,7 @@ const create = async (data) => {
     target: route.target,
     distance: route.distance,
   }));
-  const createdRoutes = await Route.bulkCreate([...bulkRouteInsertions])
+  await Route.bulkCreate([...bulkRouteInsertions])
   return {
     id: createdGraph.id,
     data,
