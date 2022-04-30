@@ -10,6 +10,10 @@ const {
 const GraphModel = require('../../../src/models/Graph');
 const RouteModel = require('../../../src/models/Route');
 const GraphService = require('../../../src/services/GraphsService');
+const RouteService = require('../../../src/services/RoutesService');
+
+const ID = 2;
+
 
 describe('GraphService', () => {
   describe('POST /graph endpoint create functionality', () => {
@@ -39,10 +43,43 @@ describe('GraphService', () => {
 
     it('Return sould be an object with id: 2 and data: [...dataMock]', async () => {
       const expectedResult = {
-        id: 2,
+        id: ID,
         data: [...dataMock],
       };
       const result = await GraphService.create(dataMock);
+
+      expect(result).to.be.deep.equal(expectedResult);
+    })
+  })
+
+  describe('GET /graph/:graphId endpoint getAllById functionality when id exists', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return sould be an object', async () => {
+      const result = await RouteService.getAllById(ID);
+
+      expect(result).to.be.an('object');
+    })
+    
+    it('Return should be an object with properties id and data', async () => {
+      const result = await RouteService.getAllById(ID);
+      
+      expect(result).to.includes.all.keys('id', 'data');
+    })
+
+    it('Return sould be an object with id: 2 and data: [...dataMock]', async () => {
+      const expectedResult = {
+        id: ID,
+        data: [...dataMock],
+      };
+      const result = await RouteService.getAllById(ID);
 
       expect(result).to.be.deep.equal(expectedResult);
     })

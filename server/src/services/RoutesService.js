@@ -3,7 +3,6 @@ const Graph = require('node-dijkstra')
 const helpers = require('../helpers');
 
 const getAllById = async (graphId) => {
-  console.log(graphId)
   const graphRoutes = await Route.findAll({
     where: { id: graphId },
     attributes: ['source', 'target', 'distance']
