@@ -22,6 +22,9 @@ const getShortestPath = async (graphId, town1, town2) => {
     where: { id: graphId },
     attributes: ['source', 'target', 'distance']
   });
+
+  if(graphRoutes.length === 0) return null;
+  
   const graphObject = helpers.nodesObject(graphRoutes);
   const path = new Graph(graphObject);
   const shortestPath = path.path(town1, town2, { cost: true });
