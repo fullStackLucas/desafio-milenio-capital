@@ -34,5 +34,11 @@ describe('GraphService', () => {
 
       expect(result).to.be.an('object');
     })
+    
+    it('Return should be an object with properties id and data', async () => {
+      const result = await GraphService.create(dataMock);
+      
+      expect(result).to.includes.all.keys('id', 'data');
+    })
   })
 })
