@@ -8,6 +8,10 @@ const RouteService = require('../../../src/services/RoutesService');
 
 const ID = 2;
 const INEXISTENT_ID = 9;
+const TOWN1 = 'A';
+const TOWN2 = 'C';
+const DISTANCE = 8;
+const PATH_MOCK = ['A', 'B', 'C'];
 
 describe('RouteService', () => {
   describe('GET /graph/:graphId endpoint getAllById functionality when id exists', () => {
@@ -60,5 +64,36 @@ describe('RouteService', () => {
     })
   })
 
-  describe('POST /distance/<graphId>/from/<town1>/to/<town2> ')
+  describe('POST /distance/<graphId>/from/<town1>/to/<town2> when id and graph exists', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return of getShortestPath sould be an object', async () => {
+      const result = await RouteService.getShortestPath(ID, TOWN1, TOWN2);
+
+      expect(result).to.be.an('object');
+    })
+
+    it('Return of getShortestPath should be an object with properties distance and path', async () => {
+      const result = await RouteService.getShortestPath(ID, TOWN1, TOWN2);
+      
+      expect(result).to.includes.all.keys('distance', 'path');
+    })
+
+    it('Return of getShortestPath sould be an object with distance: 8 and path: ["A", "B", "C"]', async () => {
+      const expectedResult = {
+        distance: DISTANCE,
+        path: PATH_MOCK,
+      };
+      const result = await RouteService.getShortestPath(ID, TOWN1, TOWN2);
+
+      expect(result).to.be.deep.equal(expectedResult);
+    })
+  })
 })
