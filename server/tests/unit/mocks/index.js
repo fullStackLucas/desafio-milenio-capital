@@ -12,3 +12,7 @@ const dataMock = [
   { source: "E", target: "D", distance: 7 }
 ];
 
+const createGraphMock = () => ({
+  id: 2,
+});
+
