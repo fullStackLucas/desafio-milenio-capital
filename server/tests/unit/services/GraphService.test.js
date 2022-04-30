@@ -28,5 +28,11 @@ describe('GraphService', () => {
       GraphModel.create.restore();
       RouteModel.bulkCreate.restore();
     })
+
+    it('Return sould be an object', async () => {
+      const result = await GraphService.create(dataMock);
+
+      expect(result).to.be.an('object');
+    })
   })
 })
