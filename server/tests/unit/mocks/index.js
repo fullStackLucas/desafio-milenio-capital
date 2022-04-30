@@ -16,3 +16,5 @@ const createGraphMock = async () => ({
   id: 2,
 });
 
+const bulkCreateRouteMock = (data) => console.log(data);
+
