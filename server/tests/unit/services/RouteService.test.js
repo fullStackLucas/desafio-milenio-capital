@@ -114,4 +114,21 @@ describe('RouteService', () => {
       expect(result).to.be.null;
     })
   })
+
+  describe('POST /distance/<graphId>/from/<town1>/to/<town2> when id does not exists', () => {
+    beforeEach(() => {
+      const routeMockResolved = [];
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return of getShortestPath sould be null', async () => {
+      const result = await RouteService.getShortestPath(INEXISTENT_ID, TOWN1, TOWN2);
+
+      expect(result).to.be.null;
+    })
+  })
 })
