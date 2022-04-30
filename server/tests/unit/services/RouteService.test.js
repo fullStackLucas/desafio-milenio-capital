@@ -10,7 +10,6 @@ const ID = 2;
 const INEXISTENT_ID = 9;
 
 describe('RouteService', () => {
-  
   describe('GET /graph/:graphId endpoint getAllById functionality when id exists', () => {
     beforeEach(() => {
       const routeMockResolved = dataMock;
@@ -60,4 +59,6 @@ describe('RouteService', () => {
       expect(result).to.be.null;
     })
   })
+
+  describe('POST /distance/<graphId>/from/<town1>/to/<town2> ')
 })
