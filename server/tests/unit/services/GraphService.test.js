@@ -14,10 +14,6 @@ const GraphService = require('../../../src/services/GraphsService');
 describe('GraphService', () => {
   describe('POST /graph endpoint create functionality', () => {
     beforeEach(() => {
-      const expectedResult = {
-        id: 2,
-        data: [...dataMock],
-      };
       const graphMockResolved = createGraphMock();
       const routeMockResolved = bulkCreateRouteMock();
       sinon.stub(GraphModel, 'create').resolves(graphMockResolved);
@@ -39,6 +35,16 @@ describe('GraphService', () => {
       const result = await GraphService.create(dataMock);
       
       expect(result).to.includes.all.keys('id', 'data');
+    })
+
+    it('Return sould be an object with id: 2 and data: [...dataMock]', async () => {
+      const expectedResult = {
+        id: 2,
+        data: [...dataMock],
+      };
+      const result = await GraphService.create(dataMock);
+
+      expect(result).to.be.deep.equal(expectedResult);
     })
   })
 })
