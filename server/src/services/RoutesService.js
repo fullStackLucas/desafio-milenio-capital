@@ -28,8 +28,7 @@ const getShortestPath = async (graphId, town1, town2) => {
   const path = new Graph(graphObject);
   const shortestPath = path.path(town1, town2, { cost: true });
 
-  if (!shortestPath) return null;
-  
+  if (!shortestPath.path) return null;
   const pathRenamed = helpers.changeNameOfKey(shortestPath, 'cost', 'distance')
   return pathRenamed;
 }
