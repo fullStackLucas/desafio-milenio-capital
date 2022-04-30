@@ -18,3 +18,8 @@ const createGraphMock = async () => ({
 
 const bulkCreateRouteMock = (data) => console.log(data);
 
+module.exports = {
+  dataMock,
+  createGraphMock,
+  bulkCreateRouteMock,
+}
