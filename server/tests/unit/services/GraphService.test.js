@@ -13,6 +13,7 @@ const GraphService = require('../../../src/services/GraphsService');
 const RouteService = require('../../../src/services/RoutesService');
 
 const ID = 2;
+const INEXISTENT_ID = 9;
 
 
 describe('GraphService', () => {
@@ -82,6 +83,23 @@ describe('GraphService', () => {
       const result = await RouteService.getAllById(ID);
 
       expect(result).to.be.deep.equal(expectedResult);
+    })
+  })
+
+  describe('GET /graph/:graphId endpoint getAllById functionality when id does not exists', () => {
+    beforeEach(() => {
+      const routeMockResolved = [];
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return sould be false', async () => {
+      const result = await RouteService.getAllById(INEXISTENT_ID);
+
+      expect(result).to.be.null;
     })
   })
 })
