@@ -8,6 +8,7 @@ const RouteService = require('../../../src/services/RoutesService');
 
 const ID = 2;
 const INEXISTENT_ID = 9;
+const INEXISTENT_TOWN = 'X';
 const TOWN1 = 'A';
 const TOWN2 = 'C';
 const DISTANCE = 8;
@@ -94,6 +95,23 @@ describe('RouteService', () => {
       const result = await RouteService.getShortestPath(ID, TOWN1, TOWN2);
 
       expect(result).to.be.deep.equal(expectedResult);
+    })
+  })
+
+  describe('POST /distance/<graphId>/from/<town1>/to/<town2> when id exists but graph does not', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return of getShortestPath sould be null', async () => {
+      const result = await RouteService.getShortestPath(ID, INEXISTENT_TOWN, TOWN2);
+
+      expect(result).to.be.null;
     })
   })
 })
