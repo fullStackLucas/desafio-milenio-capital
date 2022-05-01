@@ -33,7 +33,17 @@ const getShortestPath = async (graphId, town1, town2) => {
   return pathRenamed;
 }
 
+const getAllPaths = async (graphId, town1, town2, maxStops) => {
+  const graphRoutes = await Route.findAll({
+    where: { id: graphId },
+    attributes: ['source', 'target', 'distance']
+  });
+
+  if(graphRoutes.length === 0) return null;
+}
+
 module.exports = {
   getAllById,
   getShortestPath,
+  getAllPaths,
 }
