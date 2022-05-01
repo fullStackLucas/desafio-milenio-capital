@@ -13,7 +13,7 @@ const createResolved = {
 }
 
 describe('GraphController', () => {
-  describe('GraphController.create()', () => {
+  describe('GraphController.create() when everything is ok', () => {
     const req = {
       body: {
         data: [...dataMock],
