@@ -6,7 +6,6 @@ const create = async (req, res) => {
     const createdGraph = await GraphService.create(data);
     return res.status(201).json(createdGraph);
   } catch (error) {
-    console.log(error.message);
     return res.status(404).json(error.message);
   }
 }
