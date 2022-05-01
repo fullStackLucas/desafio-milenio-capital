@@ -12,6 +12,7 @@ const getAllResolved = {
   data: [...dataMock]
 }
 const errorMessage = { error: 'NOT FOUND (404)' }
+const shortestPathMock = { distance: 8, path: ['A', 'B', 'C'] };
 
 describe('RouteController', () => {
   describe('GET route /graph/:graphId Found', () => {
@@ -75,6 +76,76 @@ describe('RouteController', () => {
 
     it('response json should be an error message', async () => {
       await RouteController.getAllById(req, res)
+
+      expect(res.json.calledWith(errorMessage)).to.be.true;
+    })
+  })
+
+  describe('POST route /distance/:graphId/from/:town1/to/:town2', () => {
+    const req = {
+      params: {
+        graphId: ID,
+        town1: 'A',
+        town2: 'C',
+      },
+    };
+
+    const res = {};
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getShortestPath').resolves(shortestPathMock)
+    })
+
+    afterEach(() =>{
+      RouteService.getShortestPath.restore();
+    })
+
+    it('response status of route should be 200', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.status.calledWith(200)).to.be.true;
+    })
+
+    it('response json should be an object with distance and path', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.json.calledWith(shortestPathMock)).to.be.true;
+    })
+  })
+
+  describe('POST route /distance/:graphId/from/:town1/to/:town2 Not Found', () => {
+    const req = {
+      params: {
+        graphId: ID,
+        town1: 'X',
+        town2: 'C',
+      },
+    };
+
+    const res = {};
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getShortestPath').resolves(null)
+    })
+
+    afterEach(() =>{
+      RouteService.getShortestPath.restore();
+    })
+
+    it('response status of route should be 404', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.status.calledWith(404)).to.be.true;
+    })
+
+    it('response json should be an object with distance and path', async () => {
+      await RouteController.getShortestPath(req, res)
 
       expect(res.json.calledWith(errorMessage)).to.be.true;
     })
