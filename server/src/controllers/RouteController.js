@@ -12,7 +12,7 @@ const getAllById = async (req, res, next) => {
   }
 }
 
-const getShortestPath = async (req, res) => {
+const getShortestPath = async (req, res, next) => {
   try {
     const { graphId, town1, town2 } = req.params;
     const shortestPath = await RouteService.getShortestPath(
@@ -28,7 +28,18 @@ const getShortestPath = async (req, res) => {
   }
 }
 
+const getAllPaths = async (req, res, next) => {
+  try {
+    const { graphId, town1, town2, maxStops } = req.params;
+    const possiblePaths = await RouteService.getAllPaths(graphId, town1, town2, maxStops);
+    if (!possiblePaths) return res.status(404).json({ error: 'NOT FOUND (404)' });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllById,
   getShortestPath,
+  getAllPaths,
 }

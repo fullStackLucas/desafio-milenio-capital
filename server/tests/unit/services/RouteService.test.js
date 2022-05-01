@@ -159,10 +159,27 @@ describe('RouteService', () => {
       RouteModel.findAll.restore();
     })
 
-    it('Return of getShortestPath sould be null', async () => {
-      const result = await RouteService.getShortestPath(INEXISTENT_ID, TOWN1, TOWN2);
+    it('Return of getAllPaths sould be null', async () => {
+      const result = await RouteService.getAllPaths(INEXISTENT_ID, TOWN1, TOWN2);
 
       expect(result).to.be.null;
+    })
+  })
+
+  describe('POST /routes/2/from/A/to/C?maxStops=3', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return of getAllPaths sould be an object', async () => {
+      const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
+
+      expect(result).to.be.an('object');
     })
   })
 })
