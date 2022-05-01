@@ -21,14 +21,14 @@ const getShortestPath = async (graphId, town1, town2) => {
     where: { id: graphId },
     attributes: ['source', 'target', 'distance']
   });
-
+  if(town1 === town2) return 0;
   if(graphRoutes.length === 0) return null;
   
   const graphObject = helpers.nodesObject(graphRoutes);
   const path = new Graph(graphObject);
   const shortestPath = path.path(town1, town2, { cost: true });
 
-  if (!shortestPath.path) return null;
+  if (!shortestPath.path) return -1;
   const pathRenamed = helpers.changeNameOfKey(shortestPath, 'cost', 'distance')
   return pathRenamed;
 }
