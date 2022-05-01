@@ -116,6 +116,76 @@ describe('RouteController', () => {
     })
   })
 
+  describe('POST route /distance/:graphId/from/:town1/to/:town2 with t1 and t2 being equal', () => {
+    const req = {
+      params: {
+        graphId: ID,
+        town1: 'A',
+        town2: 'A',
+      },
+    };
+
+    const res = {};
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getShortestPath').resolves(0)
+    })
+
+    afterEach(() =>{
+      RouteService.getShortestPath.restore();
+    })
+
+    it('response status of route should be 200', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.status.calledWith(200)).to.be.true;
+    })
+
+    it('response json should be number zero', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.json.calledWith(0)).to.be.true;
+    })
+  })
+
+  describe('POST route /distance/:graphId/from/:town1/to/:town2 when does not have path', () => {
+    const req = {
+      params: {
+        graphId: ID,
+        town1: 'X',
+        town2: 'C',
+      },
+    };
+
+    const res = {};
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getShortestPath').resolves(-1)
+    })
+
+    afterEach(() =>{
+      RouteService.getShortestPath.restore();
+    })
+
+    it('response status of route should be 200', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.status.calledWith(200)).to.be.true;
+    })
+
+    it('response json should be an object with distance and path', async () => {
+      await RouteController.getShortestPath(req, res)
+
+      expect(res.json.calledWith(-1)).to.be.true;
+    })
+  })
+
   describe('POST route /distance/:graphId/from/:town1/to/:town2 Not Found', () => {
     const req = {
       params: {
