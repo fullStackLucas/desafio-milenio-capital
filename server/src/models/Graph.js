@@ -22,7 +22,7 @@ const Graph = db.define(
 
 Graph.associate = (models) => {
   Graph.hasMany(models.Route, {
-    foreignKey: 'graphId', as: 'graphId',
+    foreignKey: 'id', as: 'id',
   });
 };
 

@@ -32,7 +32,7 @@ const Route = db.define(
 
 Route.associate = (models) => {
   Route.belongsTo(models.Graph, {
-    foreignKey: 'graphId', as: 'graphId',
+    foreignKey: 'id', as: 'id',
   });
 };
 
