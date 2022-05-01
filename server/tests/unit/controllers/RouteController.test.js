@@ -7,6 +7,7 @@ const RouteController = require('../../../src/controllers/RouteController');
 const RouteService = require('../../../src/services/RoutesService');
 
 const ID = 2;
+const INVALID_ID = 9;
 const getAllResolved = {
   id: ID,
   data: [...dataMock]
@@ -189,8 +190,8 @@ describe('RouteController', () => {
   describe('POST route /distance/:graphId/from/:town1/to/:town2 Not Found', () => {
     const req = {
       params: {
-        graphId: ID,
-        town1: 'X',
+        graphId: INVALID_ID,
+        town1: 'A',
         town2: 'C',
       },
     };
@@ -220,4 +221,39 @@ describe('RouteController', () => {
       expect(res.json.calledWith(errorMessage)).to.be.true;
     })
   })
+
+  describe('POST /routes/<graphId>/from/<town1>/to/<town2>?maxStops=<maxStops> Not Found', () => {
+    const req = {
+      params: {
+        graphId: INVALID_ID,
+        town1: 'A',
+        town2: 'C',
+      },
+    };
+
+    const res = {};
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getAllPaths').resolves(null)
+    })
+
+    afterEach(() =>{
+      RouteService.getAllPaths.restore();
+    })
+
+    it('response status of route should be 404', async () => {
+      await RouteController.getAllPaths(req, res)
+
+      expect(res.status.calledWith(404)).to.be.true;
+    })
+
+    it('response json should be an object with distance and path', async () => {
+      await RouteController.getAllPaths(req, res)
+
+      expect(res.json.calledWith(errorMessage)).to.be.true;
+    })
+  })  
 })
