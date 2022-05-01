@@ -108,10 +108,27 @@ describe('RouteService', () => {
       RouteModel.findAll.restore();
     })
 
-    it('Return of getShortestPath sould be null', async () => {
+    it('Return of getShortestPath sould be -1', async () => {
       const result = await RouteService.getShortestPath(ID, INEXISTENT_TOWN, TOWN2);
 
-      expect(result).to.be.null;
+      expect(result).to.be.equal(-1);
+    })
+  })
+
+  describe('POST /distance/<graphId>/from/<town1>/to/<town2> when id exists but town1 and town2 are equal', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
+
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
+
+    it('Return of getShortestPath sould be zero', async () => {
+      const result = await RouteService.getShortestPath(ID, TOWN2, TOWN2);
+
+      expect(result).to.be.equal(0);
     })
   })
 
