@@ -37,5 +37,11 @@ describe('GraphController', () => {
 
       expect(res.status.calledWith(201)).to.be.true;
     })
+
+    it('response json should be an object with id and data', async () => {
+      await GraphController.create(req, res)
+
+      expect(res.json.calledWith(createResolved)).to.be.true;
+    })
   })
 })
