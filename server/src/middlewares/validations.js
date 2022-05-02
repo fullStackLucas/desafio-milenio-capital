@@ -1,7 +1,7 @@
-const validatioMiddleware = require('../schemas/validateData');
+const validationMiddleware = require('../schemas/validateData');
 
 module.exports = (req, res, next) => {
-  const { error } = validatioMiddleware.validate(req.body);
+  const { error } = validationMiddleware.validate(req.body);
 
   if (error) {
     const [code, message] = error.message.split('|');
