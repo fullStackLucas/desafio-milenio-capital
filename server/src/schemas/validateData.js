@@ -15,9 +15,10 @@ module.exports = Joi.object({
         'string.base': '422|target at {{#label}} must be a string',
         'string.min': '422|target at {{#label}} must be at least 1 character long',
       }),
-      distance: Joi.number().required().messages({
+      distance: Joi.number().integer().min(1).required().messages({
         'any.required': '400|distance at {{#label}} is required',
         'number.base': '422|distance at {{#label}} must be a number',
+        'number.min': '422|distance at {{#label}} must be greater than or equal to 1',
       }),
     })
   )
