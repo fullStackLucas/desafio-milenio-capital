@@ -1,5 +1,5 @@
-const GraphDB = require('../integrationMocks/GraphDB.json');
-const RouteDB = require('../integrationMocks/RouteDB.json');
+const GraphDB = require('../integrationMocks/GraphDB');
+const RouteDB = require('../integrationMocks/RouteDB');
 
 const GraphMockCreate = (Instance, data) => {
   if(
@@ -34,14 +34,23 @@ const GraphMockCreate = (Instance, data) => {
   };
 };
 
-const RouteMockFindAll = (id) => RouteDB.filter((route) => route.id === id);
+const RouteMockFindAll = (id) => {
+  console.log(RouteDB)
+  const result = RouteDB.filter((route) => route.id === id)
+  return result;
+};
 
 const Graph = {
   create: async (data) => GraphMockCreate(GraphDB, data),
 };
 
 const Route = {
-  findAll: async (id) => RouteMockFindAll(id),
+  findAll: async (id) => {
+    console.log("Cheguei no mock")
+    const oi = RouteMockFindAll(id)
+    console.log(oi)
+    return oi
+  },
 }
 
 module.exports = {

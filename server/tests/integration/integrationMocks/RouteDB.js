@@ -1,4 +1,4 @@
-[
+const RouteDB = [
   {
     "id": 1, "source": "A", "target": "B", "distance": 6
   },
@@ -33,3 +33,5 @@
     "id": 1, "source": "E", "target": "D", "distance": 7
   }
 ]
+
+module.exports = RouteDB;
