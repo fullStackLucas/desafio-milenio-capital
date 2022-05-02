@@ -1,7 +1,9 @@
 const Joi = require('joi');
 
 module.exports = Joi.object({
-  data: Joi.array().items(
+  data: Joi.array().required().messages({
+    'any.required': '400|{{#label}} is required',
+  }).items(
     Joi.object({
       source: Joi.string().min(1).required().messages({
         'any.required': '400|source at {{#label}} is required',
@@ -23,4 +25,3 @@ module.exports = Joi.object({
     })
   )
 });
-
