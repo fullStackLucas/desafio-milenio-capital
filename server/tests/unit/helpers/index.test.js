@@ -13,7 +13,7 @@ const shortestPath = {
   cost: 8, path: ['A', 'B', 'C']
 }
 
-const renamadeObject = {
+const renamadObject = {
   distance: 8, path: ['A', 'B', 'C']
 }
 
@@ -26,7 +26,7 @@ describe('nodesObject tests', () => {
 
 describe('changeNameOfKey tests', () => {
   it('Receives an object with cost and path and returns keys distance and path', () => {
-    const result = changeNameOfKey(shortestPath);
-    expect(result).to.be.deep.equal(renamadeObject)
+    const result = changeNameOfKey(shortestPath, 'cost', 'distance');
+    expect(result).to.be.deep.equal(renamadObject)
   })
 })
