@@ -6,7 +6,7 @@ const routes = require('./routes');
 
 const server = express();
 const PORT = process.env.PORT || 8080;
-const errorMiddleware = require('../src/moddlewares/errorMiddleware');
+const errorMiddleware = require('../src/middlewares/errorMiddleware');
 
 server.use(json());
 server.use(routes);
