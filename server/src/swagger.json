@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Milenio-Capital API",
+    "description": "API referente ao desafio técnico backend jr/pl do Milenio-Capital",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Lucas Pinheiro",
+      "email": "lucas.pinheiror@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/graph",
+      "description": "Servidor local para testes do método POST para inserir um grafo"
+    }
+  ]
+}

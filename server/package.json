@@ -11,7 +11,8 @@
     "joi": "^17.6.0",
     "mysql2": "^2.3.3",
     "node-dijkstra": "^2.5.0",
-    "sequelize": "^6.19.0"
+    "sequelize": "^6.19.0",
+    "swagger-ui-express": "^4.3.0"
   },
   "scripts": {
     "drop": "npx sequelize-cli db:drop $",
