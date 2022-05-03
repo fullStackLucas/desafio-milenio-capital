@@ -11,8 +11,69 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/graph",
-      "description": "Servidor local para testes do método POST para inserir um grafo"
+      "url": "http://localhost:8080",
+      "description": "URL base de testes"
     }
-  ]
+  ],
+  "paths": {
+    "/graph": {
+      "post": {
+        "summary": "Cadastro de grafo",
+        "description": "Rota para cadastrar novo array com grafos",
+        "tags": [
+          "graph"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Graphs"
+              },
+              "examples": {
+                "graph": {
+                  "value": {
+                    "data": [
+                      {"source": "A", "target": "B", "distance": 5},
+                      {"source": "A", "target": "C", "distance": 8},
+                      {"source": "B", "target": "D", "distance": 3},
+                      {"source": "B", "target": "E", "distance": 2},
+                      {"source": "C", "target": "A", "distance": 5},
+                      {"source": "D", "target": "C", "distance": 1},
+                      {"source": "E", "target": "B", "distance": 5}
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }, 
+  "components": {
+    "schemas": {
+      "Graphs": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "distance": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
