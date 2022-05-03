@@ -5,7 +5,7 @@ module.exports = {
     database: 'milenio_capital',
     host: process.env.HOSTNAME || 'localhost',
     dialect: 'mysql',
-    port: 3308
+    port: process.env.MYSQL_PORT || 3308,
   },
   test: {
     username: process.env.MYSQL_USER || 'root',
