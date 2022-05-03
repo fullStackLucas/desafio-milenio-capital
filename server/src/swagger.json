@@ -46,6 +46,46 @@
               }
             }
           }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/GraphResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graph/{graphId}": {
+      "get": {
+        "description": "Busca um grafo completo pelo id",
+        "summary": "Busca de grafos",
+        "tags": ["graph"],
+        "parameters": [
+          {
+            "name": "graphId",
+            "in": "path",
+            "description": "Id do grafo para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#components/schemas/GraphResponse"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -55,6 +95,31 @@
       "Graphs": {
         "type": "object",
         "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "distance": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GraphResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
           "data": {
             "type": "array",
             "items": {
