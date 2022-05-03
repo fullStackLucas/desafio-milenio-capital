@@ -20,7 +20,7 @@
     "prestart": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "start": "node src/app.js",
     "unseed": "npx sequelize-cli db:seed:undo",
-    "test": "nyc --all --exclude src/sequelize --exclude src/middlewares --exclude src/schemas mocha tests/**/**/*.js --exit"
+    "test": "nyc --all --exclude src/sequelize --exclude src/routes --exclude src/middlewares --exclude src/schemas mocha tests/**/**/*.js --exit"
   },
   "repository": {
     "type": "git",

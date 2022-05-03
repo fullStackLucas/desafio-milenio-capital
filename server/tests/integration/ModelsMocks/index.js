@@ -18,6 +18,15 @@ const GraphMockCreate = (Instance, data) => {
     Instance.push({ id: newId });
   }
 
+  RouteMockBulkCreate(data);
+  
+  return {
+    id: newId,
+    data: [...data],
+  };
+};
+
+const RouteMockBulkCreate = (data) => {
   data.forEach((route) => {
     const objectToPush = {
       id: newId,
@@ -27,12 +36,7 @@ const GraphMockCreate = (Instance, data) => {
     };
     RouteDB.push(objectToPush);
   });
-  
-  return {
-    id: newId,
-    data: [...data],
-  };
-};
+}
 
 const RouteMockFindAll = (id) => {
   console.log(RouteDB)
@@ -45,12 +49,8 @@ const Graph = {
 };
 
 const Route = {
-  findAll: async (id) => {
-    console.log("Cheguei no mock")
-    const oi = RouteMockFindAll(id)
-    console.log(oi)
-    return oi
-  },
+  findAll: async (id) => RouteMockFindAll(id),
+  bulkCreate: async (data) => RouteMockBulkCreate(data)
 }
 
 module.exports = {
