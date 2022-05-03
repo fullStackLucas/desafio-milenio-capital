@@ -1,26 +1,13 @@
+require('dotenv').config();
 module.exports = {
-  development: {
-    username: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || 'password',
-    database: 'milenio_capital',
-    host: process.env.HOSTNAME || 'localhost',
-    dialect: 'mysql',
-    port: process.env.MYSQL_PORT || 3308,
+  username: process.env.MYSQL_USER || 'root',
+  password: process.env.MYSQL_PASSWORD || 'password',
+  database: 'milenio_capital',
+  host: process.env.MYSQL_HOSTNAME || 'localhost',
+  port: Number(process.env.MYSQL_PORT) || 3308,
+  dialect: 'mysql',
+  dialectOptions: {
+    timezone: 'Z',
   },
-  test: {
-    username: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || 'password',
-    database: 'milenio_capital',
-    host: process.env.HOSTNAME || 'localhost',
-    dialect: 'mysql',
-    port: 3308
-  },
-  production: {
-    username: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || 'password',
-    database: 'milenio_capital',
-    host: process.env.HOSTNAME || 'localhost',
-    dialect: 'mysql',
-    port: 3308
-  },
-};
+  logging: false
+}

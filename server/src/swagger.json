@@ -116,8 +116,7 @@
           {
             "name": "maxStops",
             "in": "query",
-            "description": "Número máximo de paradas do trajeto entre town1 e town2",
-            "required": true
+            "description": "Número máximo de paradas do trajeto entre town1 e town2"
           }
         ],
         "responses": {
