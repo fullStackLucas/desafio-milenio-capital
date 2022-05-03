@@ -92,7 +92,7 @@
     "/routes/{graphId}/from/{town1}/to/{town2}?maxStops={maxStops}": {
       "post": {
         "description": "Devolve todas as rotas possíveis entre dois pontos, com um limitador de paradas (caso haja)",
-        "summary": "Busca todos os caminhos possíveis (ROTA NÃO IMPLEMENTADA)",
+        "summary": "Busca todos os caminhos possíveis",
         "tags": ["graph"],
         "parameters": [
           {
