@@ -34,6 +34,7 @@ const getAllPaths = async (req, res, next) => {
     const { maxStops } = req.query;
     const possiblePaths = await RouteService.getAllPaths(graphId, town1, town2, maxStops);
     if (!possiblePaths) return res.status(404).json({ error: 'NOT FOUND (404)' });
+    return res.status(200).json(possiblePaths);
   } catch (error) {
     next(error);
   }
