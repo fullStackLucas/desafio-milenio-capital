@@ -16,7 +16,7 @@ services:
     container_name: milenio_api
     restart: always
     image: milenio-backend
-    build: ./src/app
+    build: ./server
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_PASSWORD: password
