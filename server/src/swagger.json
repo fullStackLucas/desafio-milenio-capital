@@ -89,6 +89,82 @@
         }
       }
     },
+    "/distance/{graphId}/from/{town1}/to/{town2}?maxStops={maxStops}": {
+      "post": {
+        "description": "Devolve todas as rotas possíveis entre dois pontos, com um limitador de paradas (caso haja)",
+        "summary": "Busca todos os caminhos possíveis (ROTA NÃO IMPLEMENTADA)",
+        "tags": ["graph"],
+        "parameters": [
+          {
+            "name": "graphId",
+            "in": "path",
+            "description": "Id do grafo para busca",
+            "required": true
+          },
+          {
+            "name": "town1",
+            "in": "path",
+            "description": "Ponto de partida",
+            "required": true
+          },
+          {
+            "name": "town2",
+            "in": "path",
+            "description": "Ponto de chegada",
+            "required": true
+          },
+          {
+            "name": "maxStops",
+            "in": "query",
+            "description": "Número máximo de paradas do trajeto entre town1 e town2",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "routes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "route": {
+                            "type": "string"
+                          },
+                          "stops": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/distance/{graphId}/from/{town1}/to/{town2}": {
       "post": {
         "description": "Busca o menor caminho dadas duas arestas de um grafo",
