@@ -14,6 +14,12 @@ const getAllResolved = {
 }
 const errorMessage = { error: 'NOT FOUND (404)' }
 const shortestPathMock = { distance: 8, path: ['A', 'B', 'C'] };
+const allRoutesMock = { 
+  routes: [
+    { route: 'ABC', stops: 2 },
+    { route: 'AEBC', stops: 3 }
+  ]
+}
 
 describe('RouteController', () => {
   describe('GET route /graph/:graphId Found', () => {
@@ -222,16 +228,59 @@ describe('RouteController', () => {
     })
   })
 
-  describe('POST /routes/<graphId>/from/<town1>/to/<town2>?maxStops=<maxStops> Not Found', () => {
+  describe('POST /routes/1/from/A/to/C?maxStops=3', () => {
     const req = {
       params: {
-        graphId: INVALID_ID,
+        graphId: 1,
         town1: 'A',
         town2: 'C',
       },
+      query: {
+        maxStops: 3
+      }
     };
 
     const res = {};
+    const next = () => {}
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getAllPaths').resolves(allRoutesMock)
+    })
+
+    afterEach(() =>{
+      RouteService.getAllPaths.restore();
+    })
+
+    it('response status of route should be 200', async () => {
+      await RouteController.getAllPaths(req, res, next)
+
+      expect(res.status.calledWith(200)).to.be.true;
+    })
+
+    it('response json should be an object with all routes', async () => {
+      await RouteController.getAllPaths(req, res, next)
+
+      expect(res.json.calledWith(allRoutesMock)).to.be.true;
+    })
+  })
+
+  describe('POST /routes/999/from/A/to/C?maxStops=3 when id doesnt exists', () => {
+    const req = {
+      params: {
+        graphId: 999,
+        town1: 'A',
+        town2: 'C',
+      },
+      query: {
+        maxStops: 3
+      }
+    };
+
+    const res = {};
+    const next = () => {}
 
     beforeEach(() => {
       res.status = sinon.stub().returns(res);
@@ -245,15 +294,54 @@ describe('RouteController', () => {
     })
 
     it('response status of route should be 404', async () => {
-      await RouteController.getAllPaths(req, res)
+      await RouteController.getAllPaths(req, res, next)
 
       expect(res.status.calledWith(404)).to.be.true;
     })
 
-    it('response json should be an object with distance and path', async () => {
-      await RouteController.getAllPaths(req, res)
+    it('response json should be an object with all routes', async () => {
+      await RouteController.getAllPaths(req, res, next)
 
       expect(res.json.calledWith(errorMessage)).to.be.true;
     })
-  })  
+  })
+
+  describe('POST /routes/999/from/A/to/C?maxStops=3 when doesnt exists routes in this graph', () => {
+    const req = {
+      params: {
+        graphId: 1,
+        town1: 'A',
+        town2: 'Z',
+      },
+      query: {
+        maxStops: 3
+      }
+    };
+
+    const res = {};
+    const next = () => {}
+
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(RouteService, 'getAllPaths').resolves([])
+    })
+
+    afterEach(() =>{
+      RouteService.getAllPaths.restore();
+    })
+
+    it('response status of route should be 200', async () => {
+      await RouteController.getAllPaths(req, res, next)
+
+      expect(res.status.calledWith(200)).to.be.true;
+    })
+
+    it('response json should be an object with all routes', async () => {
+      await RouteController.getAllPaths(req, res, next)
+
+      expect(res.json.calledWith([])).to.be.true;
+    })
+  })
 })

@@ -172,33 +172,33 @@ describe('RouteService', () => {
     })
   })
 
-  // describe('POST /routes/2/from/A/to/C?maxStops=3', () => {
-  //   beforeEach(() => {
-  //     const routeMockResolved = dataMock;
-  //     sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
-  //   })
+  describe('POST /routes/2/from/A/to/C?maxStops=3', () => {
+    beforeEach(() => {
+      const routeMockResolved = dataMock;
+      sinon.stub(RouteModel, 'findAll').resolves(routeMockResolved);
+    })
 
-  //   afterEach(() => {
-  //     RouteModel.findAll.restore();
-  //   })
+    afterEach(() => {
+      RouteModel.findAll.restore();
+    })
 
-  //   it('Return of getAllPaths sould be an object', async () => {
-  //     const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
+    it('Return of getAllPaths sould be an object', async () => {
+      const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
 
-  //     expect(result).to.be.an('object');
-  //   })
+      expect(result).to.be.an('object');
+    })
 
-  //   it('Return of getAllPaths sould be an object with key: routes', async () => {
-  //     const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
-  //     console.log(result);
+    it('Return of getAllPaths sould be an object with key: routes', async () => {
+      const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
+      console.log(result);
 
-  //     expect(result).to.includes.all.keys('routes');
-  //   })
+      expect(result).to.includes.all.keys('routes');
+    })
 
-  //   it('Return of getAllPaths sould have the corect routes', async () => {
-  //     const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
+    it('Return of getAllPaths sould have the corect routes', async () => {
+      const result = await RouteService.getAllPaths(ID, TOWN1, TOWN2, 3);
 
-  //     expect(result).to.be.deep.equal(ROUTES_MOCK);
-  //   })
-  // })
+      expect(result).to.be.deep.equal(ROUTES_MOCK);
+    })
+  })
 })
