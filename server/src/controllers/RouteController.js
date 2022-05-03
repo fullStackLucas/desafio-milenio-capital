@@ -30,7 +30,8 @@ const getShortestPath = async (req, res, next) => {
 
 const getAllPaths = async (req, res, next) => {
   try {
-    const { graphId, town1, town2, maxStops } = req.params;
+    const { graphId, town1, town2 } = req.params;
+    const { maxStops } = req.query;
     const possiblePaths = await RouteService.getAllPaths(graphId, town1, town2, maxStops);
     if (!possiblePaths) return res.status(404).json({ error: 'NOT FOUND (404)' });
   } catch (error) {
