@@ -40,6 +40,12 @@ const getAllPaths = async (graphId, town1, town2, maxStops) => {
   });
 
   if(graphRoutes.length === 0) return null;
+
+  const possibleRoutes = helpers.allRoutes(graphRoutes, town1, town2, maxStops);
+  const objectToReturn = {
+    routes: [...possibleRoutes],
+  };
+  return (possibleRoutes.length > 0) ? objectToReturn : possibleRoutes;
 }
 
 module.exports = {
