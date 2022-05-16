@@ -89,7 +89,7 @@
         }
       }
     },
-    "/routes/{graphId}/from/{town1}/to/{town2}?maxStops={maxStops}": {
+    "/routes/{graphId}/from/{town1}/to/{town2}?maxStops=": {
       "post": {
         "description": "Devolve todas as rotas possíveis entre dois pontos, com um limitador de paradas (caso haja)",
         "summary": "Busca todos os caminhos possíveis",

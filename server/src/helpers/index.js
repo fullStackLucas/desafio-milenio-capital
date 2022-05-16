@@ -20,79 +20,118 @@ const changeNameOfKey = (obj, oldKeyName, newKeyName) => {
     path: [...obj.path],
   }
 }
+/**
+ * 
+ * @param {{begin: {finish: number}}} graphObject has the graphObject where shows to where the sources connects.
+ * @param {string} begin 
+ * @param {string} finish 
+ * @returns boolean
+ */
+const sourceHasConnectionWithTarget = (graphObject, begin, finish) => graphObject[begin].hasOwnProperty(finish);
 
-const allRoutes = (data, init, end, maxStops) => {
-  let pathObj = { route: '',  stops: 0 };
-  const path = [];
-  const objetoDasRotas = nodesObject(data);
-  for (let key in objetoDasRotas[init]) {
-    pathObj.route = init + key;
-    pathObj.stops += 1;
-    if (key === end) {
-      path.push(pathObj);
-      pathObj = { route: '',  stops: 0 };
-    } else {
-      for (let key1 in objetoDasRotas[key]) {
-        if (objetoDasRotas[key].hasOwnProperty(end)) {
-          pathObj.route += end;
-          pathObj.stops += 1;
-          path.push(pathObj);
-          pathObj = { route: '',  stops: 0 };
-        } else {
-          pathObj.route += key1;
-          pathObj.stops += 1;
-          for (let key2 in objetoDasRotas[key1]) {
-            if (objetoDasRotas[key1].hasOwnProperty(end)) {
-              pathObj.route += end;
-              pathObj.stops += 1;
-              path.push(pathObj);
-              pathObj = { route: '',  stops: 0 };
-            } else {
-              pathObj.route += key2;
-              pathObj.stops += 1;
-              for (let key3 in objetoDasRotas[key2]) {
-                if (objetoDasRotas[key2].hasOwnProperty(end)) {
-                  pathObj.route += end;
-                  pathObj.stops += 1;
-                  path.push(pathObj);
-                  pathObj = { route: '',  stops: 0 };
-                } else {
-                  pathObj.route += key3;
-                  pathObj.stops += 1;
-                  for (let key4 in objetoDasRotas[key3]) {
-                    if (objetoDasRotas[key3].hasOwnProperty(end)) {
-                      pathObj.route += end;
-                      pathObj.stops += 1;
-                      path.push(pathObj);
-                      pathObj = { route: '',  stops: 0 };
-                    } else {
-                      pathObj.route += key4;
-                      pathObj.stops += 1;
-                      for (let key5 in objetoDasRotas[key4]) {
-                        if (objetoDasRotas[key4].hasOwnProperty(end)) {
-                          pathObj.route += end;
-                          pathObj.stops += 1;
-                          path.push(pathObj);
-                          pathObj = { route: '',  stops: 0 };
-                        } else {
-                          pathObj.route += end;
-                          pathObj.stops += 1;
-                          path.push(pathObj);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  } 
-  return (!maxStops)
-    ? path.filter((el) => el.route[0].includes(init))
-    : path.filter((el) => el.stops <= maxStops && el.route[0].includes(init));
+/**
+ * 
+ * @param {{source: {target: number}}} object 
+ * @param {string} source 
+ * @param {string} target 
+ * @returns string[]
+ */
+const iterateObject = (object, source, target) => {
+  const lastPosition = source[source.length - 1];
+  const areWeThere = sourceHasConnectionWithTarget(object, lastPosition, target);
+  const newPaths = Object.keys(object[lastPosition]).map((pitStop) => {
+    return source + pitStop;
+  });
+
+  if (source.length === 1) return [...newPaths];
+
+  return areWeThere ? [source + target] : [...newPaths];
+}
+
+/**
+ * 
+ * @param {{key: {key: string}}} object 
+ * @param {number} key 
+ * @returns boolean
+ */
+const checkIfKeysExistsInGraph = (object, key) => {
+  const upperCasedKey = key.toUpperCase();
+  const validation = object.hasOwnProperty(upperCasedKey);
+  return validation; 
+}
+
+/**
+ * 
+ * @param {object} obj 
+ * @param {string | string[]} arr 
+ * @param {string} target 
+ * @param {undefined | string[]} oldPath 
+ * @returns string[]
+ */
+ function iterateObsectsArray (graphObject, source, target, oldPath) {
+  if (typeof source === 'string') {
+    const isSourceValid = checkIfKeysExistsInGraph(graphObject, source);
+    const isTargetValid = checkIfKeysExistsInGraph(graphObject, target);
+    if (!isSourceValid || !isTargetValid) return [];
+  }
+  let pathsWithoutTarget = [];
+  let paths = [];
+  let sourceToArray = [...source]
+  if (oldPath) {
+    paths = [...paths, ...oldPath]
+  }
+
+  sourceToArray.forEach((pathVariation) => {
+    pathsWithoutTarget = [...pathsWithoutTarget, ...iterateObject(graphObject, pathVariation, target)];
+  })
+  
+  paths = [...paths, ...pathsWithoutTarget.filter((path) => (
+    path.includes(target) && !path.slice(1, path.length).includes(path[0])
+  ))];
+
+  pathsWithoutTarget = pathsWithoutTarget
+    .filter((path) => !path.includes(target));
+
+  pathsWithoutTarget = pathsWithoutTarget.filter((path) => (
+    !path.slice(1, path.length).includes(path[0]) && !path.slice(2, path.length).includes(path[1])
+  ));
+
+  const isResultEmpty = pathsWithoutTarget.length === 0;
+    
+  if (isResultEmpty) {
+    return paths;
+  } else {
+    pathsWithoutTarget = [...iterateObsectsArray(graphObject, pathsWithoutTarget, target, paths)];
+  }
+  return pathsWithoutTarget;
+}
+
+/**
+ * 
+ * @param {string[]} routesArray 
+ * @returns [{route: string, stops: number}]
+ */
+const mapPossibleRoutes = (routesArray) => {
+  const routesWithStops = routesArray.map((route) => ({
+    route,
+    stops: route.length - 1,
+  }));
+  return routesWithStops;
+}
+
+/**
+ * 
+ * @param {{source: string, target: string, distance: number}[]} data 
+ * @param {string} init 
+ * @param {string} end 
+ * @param {number} maxStops 
+ * @returns []
+ */
+const allRoutes = (data, init, end) => {
+  const routesObject = nodesObject(data);
+  const routesArray = iterateObsectsArray(routesObject, init, end);
+  const routesWithStops = mapPossibleRoutes(routesArray);
+  return routesWithStops;
 }
 
 module.exports = {
