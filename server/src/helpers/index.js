@@ -43,6 +43,8 @@ const iterateObject = (object, source, target) => {
     return source + pitStop;
   });
 
+  if (source.length === 1) return [...newPaths];
+
   return areWeThere ? [source + target] : [...newPaths];
 }
 
@@ -82,25 +84,39 @@ const checkIfKeysExistsInGraph = (object, key) => {
   sourceToArray.forEach((pathVariation) => {
     pathsWithoutTarget = [...pathsWithoutTarget, ...iterateObject(graphObject, pathVariation, target)];
   })
-  paths = [...paths, ...pathsWithoutTarget.filter((path) => path.includes(target))];
+  
+  paths = [...paths, ...pathsWithoutTarget.filter((path) => (
+    path.includes(target) && !path.slice(1, path.length).includes(path[0])
+  ))];
+
   pathsWithoutTarget = pathsWithoutTarget
     .filter((path) => !path.includes(target));
 
-  const lastPathWithoutTarget = pathsWithoutTarget[0]
-    && pathsWithoutTarget[pathsWithoutTarget.length - 1];
-    
-  const lastString = lastPathWithoutTarget
-    && lastPathWithoutTarget[lastPathWithoutTarget.length - 1];
-    
-  const originalSource = sourceToArray[0][0];
+  pathsWithoutTarget = pathsWithoutTarget.filter((path) => (
+    !path.slice(1, path.length).includes(path[0]) && !path.slice(2, path.length).includes(path[1])
+  ));
+
   const isResultEmpty = pathsWithoutTarget.length === 0;
     
-  if (isResultEmpty || lastString === originalSource) {
+  if (isResultEmpty) {
     return paths;
   } else {
     pathsWithoutTarget = [...iterateObsectsArray(graphObject, pathsWithoutTarget, target, paths)];
   }
   return pathsWithoutTarget;
+}
+
+/**
+ * 
+ * @param {string[]} routesArray 
+ * @returns [{route: string, stops: number}]
+ */
+const mapPossibleRoutes = (routesArray) => {
+  const routesWithStops = routesArray.map((route) => ({
+    route,
+    stops: route.length - 1,
+  }));
+  return routesWithStops;
 }
 
 /**
@@ -111,78 +127,11 @@ const checkIfKeysExistsInGraph = (object, key) => {
  * @param {number} maxStops 
  * @returns []
  */
-const allRoutes = (data, init, end, maxStops) => {
+const allRoutes = (data, init, end) => {
   const routesObject = nodesObject(data);
-  let pathObj = { route: '',  stops: 0 };
-  const path = [];
-  for (let key in routesObject[init]) {
-    pathObj.route = init + key;
-    pathObj.stops += 1;
-    if (key === end) {
-      path.push(pathObj);
-      pathObj = { route: '',  stops: 0 };
-    } else {
-      for (let key1 in routesObject[key]) {
-        if (routesObject[key].hasOwnProperty(end)) {
-          pathObj.route += end;
-          pathObj.stops += 1;
-          path.push(pathObj);
-          pathObj = { route: '',  stops: 0 };
-        } else {
-          pathObj.route += key1;
-          pathObj.stops += 1;
-          for (let key2 in routesObject[key1]) {
-            if (routesObject[key1].hasOwnProperty(end)) {
-              pathObj.route += end;
-              pathObj.stops += 1;
-              path.push(pathObj);
-              pathObj = { route: '',  stops: 0 };
-            } else {
-              pathObj.route += key2;
-              pathObj.stops += 1;
-              for (let key3 in routesObject[key2]) {
-                if (routesObject[key2].hasOwnProperty(end)) {
-                  pathObj.route += end;
-                  pathObj.stops += 1;
-                  path.push(pathObj);
-                  pathObj = { route: '',  stops: 0 };
-                } else {
-                  pathObj.route += key3;
-                  pathObj.stops += 1;
-                  for (let key4 in routesObject[key3]) {
-                    if (routesObject[key3].hasOwnProperty(end)) {
-                      pathObj.route += end;
-                      pathObj.stops += 1;
-                      path.push(pathObj);
-                      pathObj = { route: '',  stops: 0 };
-                    } else {
-                      pathObj.route += key4;
-                      pathObj.stops += 1;
-                      for (let key5 in routesObject[key4]) {
-                        if (routesObject[key4].hasOwnProperty(end)) {
-                          pathObj.route += end;
-                          pathObj.stops += 1;
-                          path.push(pathObj);
-                          pathObj = { route: '',  stops: 0 };
-                        } else {
-                          pathObj.route += end;
-                          pathObj.stops += 1;
-                          path.push(pathObj);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  } 
-  return (!maxStops)
-    ? path.filter((el) => el.route[0].includes(init))
-    : path.filter((el) => el.stops <= maxStops && el.route[0].includes(init));
+  const routesArray = iterateObsectsArray(routesObject, init, end);
+  const routesWithStops = mapPossibleRoutes(routesArray);
+  return routesWithStops;
 }
 
 module.exports = {
