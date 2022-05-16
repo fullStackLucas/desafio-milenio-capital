@@ -38,7 +38,7 @@ const sourceHasConnectionWithTarget = (graphObject, begin, finish) => graphObjec
  */
 const iterateObject = (object, source, target) => {
   const lastPosition = source[source.length - 1];
-  const areWeThere = sourceHasConnectionWithTarget(object, source, target);
+  const areWeThere = sourceHasConnectionWithTarget(object, lastPosition, target);
   const newPaths = Object.keys(object[lastPosition]).map((pitStop) => {
     return source + pitStop;
   });

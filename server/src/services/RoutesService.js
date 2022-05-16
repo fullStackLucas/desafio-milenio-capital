@@ -42,12 +42,11 @@ const getAllPaths = async (graphId, town1, town2, maxStops) => {
   if(graphRoutes.length === 0) return null;
 
   const possibleRoutes = helpers.allRoutes(graphRoutes, town1, town2);
-  const routesWithStopsLimit = possibleRoutes
-    .filter((route) => route.maxStops <= maxStops);
+
+  const routesWithStopsLimit = possibleRoutes.filter((route) => route.stops <= Number(maxStops));
   
-  const objectToReturn = maxStops
-    ? { routes: [...routesWithStopsLimit] }
-    : { routes: [...possibleRoutes] };
+  const objectToReturn = maxStops ? { routes: [...routesWithStopsLimit] } : { routes: [...possibleRoutes] };
+
   return (possibleRoutes.length > 0) ? objectToReturn : possibleRoutes;
 }
 
